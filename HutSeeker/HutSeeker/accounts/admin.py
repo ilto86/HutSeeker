@@ -1,3 +1,38 @@
 from django.contrib import admin
 
-# Register your models here.
+from django.contrib.auth import admin as auth_admin, get_user_model
+
+UserModel = get_user_model()
+
+@admin.register(UserModel)
+class UserAdmin(auth_admin.UserAdmin):
+    list_display = ('email', 'is_staff', 'first_name', 'last_name')
+    list_filter = ('is_staff', 'is_superuser', 'groups')
+    ordering = ('email',)
+
+    fieldsets = (
+        (None, {'fields': (
+            'email',
+            'password',
+            'first_name',
+            'last_name',
+            'is_staff',
+            'is_superuser',
+            'is_active',
+            'date_joined',
+        )}),
+
+        ('Permissions', {
+            'fields': ('groups', 'user_permissions'),
+        }),
+        ('Important dates', {'fields': ('last_login',)}),
+    )
+
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2'),
+        }),
+    )
+
+    readonly_fields = ('date_joined', 'last_login')
