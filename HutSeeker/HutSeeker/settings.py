@@ -76,6 +76,13 @@ DATABASES = {
     }
 }
 
+print(os.getenv('DB_NAME'))
+print(os.getenv('DB_USER'))
+print(os.getenv('DB_PASSWORD'))
+print(os.getenv('DB_HOST'))
+print(os.getenv('DB_PORT'))
+print(os.getenv('SECRET_KEY'))
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -117,15 +124,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 
-STATICFILES_DIRS = (
-    BASE_DIR / 'static',
-)
-
-# Media files settings (Images)
-
-MEDIA_URL = '/media/'
-
-MEDIA_ROOT = BASE_DIR / 'mediafiles/'
+# Custom user model settings
+AUTH_USER_MODEL = 'accounts.AppUser'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
