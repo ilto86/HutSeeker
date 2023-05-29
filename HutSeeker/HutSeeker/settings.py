@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
+    'rest_framework',
 
     # My Apps
     'HutSeeker.accounts',
@@ -76,13 +78,6 @@ DATABASES = {
     }
 }
 
-print(os.getenv('DB_NAME'))
-print(os.getenv('DB_USER'))
-print(os.getenv('DB_PASSWORD'))
-print(os.getenv('DB_HOST'))
-print(os.getenv('DB_PORT'))
-print(os.getenv('SECRET_KEY'))
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -131,3 +126,7 @@ AUTH_USER_MODEL = 'accounts.AppUser'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ORIGIN_WHITELIST = [
+     'http://localhost:3000'
+]
