@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     # My Apps
     'HutSeeker.accounts',
     'HutSeeker.huts',
+    'multiselectfield',
 ]
 
 MIDDLEWARE = [
