@@ -188,6 +188,9 @@ class Huts(models.Model):
         on_delete=models.CASCADE,
     )
 
+    class Meta:
+        verbose_name_plural = "Huts"  # Specify the plural name explicitly
+
 
 class HutsLike(models.Model):
     huts = models.ForeignKey(
