@@ -4,6 +4,7 @@ from rest_framework import routers
 from .huts import views
 
 router = routers.DefaultRouter()
+router.register(r'huts', views.HutsView, 'huts')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
