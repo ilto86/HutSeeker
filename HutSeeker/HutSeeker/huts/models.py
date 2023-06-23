@@ -226,6 +226,3 @@ class HutsComment(models.Model):
         UserModel,
         on_delete=models.CASCADE,
     )
-
-#test
-#test2
