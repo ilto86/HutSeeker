@@ -6,6 +6,8 @@ from HutSeeker.huts.models import Huts, HutsLike, HutsComment
 # Register your models here.
 @admin.register(Huts)
 class HutsAdmin(admin.ModelAdmin):
+    readonly_fields = ('publication_date_and_time',)
+
     list_display = (
         'hut_name',
         'hut_owner',

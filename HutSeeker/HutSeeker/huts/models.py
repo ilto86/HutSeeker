@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 from multiselectfield import MultiSelectField
 from enum import Enum
 from django.contrib.auth import get_user_model
@@ -187,6 +188,12 @@ class Huts(models.Model):
         UserModel,
         on_delete=models.CASCADE,
     )
+
+    def save(self, *args, **kwargs):
+        # Generate the slug from the hut_name field
+        self.slug = slugify(self.hut_name)
+
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Huts"  # Specify the plural name explicitly
