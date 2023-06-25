@@ -10,7 +10,7 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - PGPORT=${DB_PORT}
-    restart: always
+    restart: unless-stopped
 
   web:
     build: .
@@ -26,7 +26,17 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - PGPORT=${DB_PORT}
-    restart: always
+    restart: unless-stopped
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/frontend
+    restart: unless-stopped
     depends_on:
       - db
 
