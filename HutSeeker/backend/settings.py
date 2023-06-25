@@ -29,9 +29,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # My Apps
-    'HutSeeker.accounts',
-    'HutSeeker.huts',
-    'multiselectfield',
+    'backend.accounts',
+    'backend.huts',
     'corsheaders',
     'rest_framework',
 ]
@@ -66,7 +65,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'HutSeeker.wsgi.application'
+WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 DATABASES = {

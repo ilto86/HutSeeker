@@ -18,7 +18,7 @@
 #     email_content = render_to_string('accounts/email-greeting.html', {'user': instance, "username": username})
 #
 #     send_mail(
-#         subject='Welcome to our HutSeeker Page!',
+#         subject='Welcome to our backend Page!',
 #         message=strip_tags(email_content),
 #         html_message=email_content,
 #         from_email=None or 'info.huthub@mail.com',
