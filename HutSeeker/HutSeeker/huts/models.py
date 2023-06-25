@@ -1,7 +1,9 @@
 from django.db import models
 from multiselectfield import MultiSelectField
-from enum import Enum
+#from enum import Enum
 from django.contrib.auth import get_user_model
+from django.urls import reverse
+from django.utils.text import slugify
 
 from django.core import validators
 from HutSeeker.utils.model_mixins import ChoicesEnumMixin
@@ -9,52 +11,89 @@ from HutSeeker.utils.model_mixins import ChoicesEnumMixin
 UserModel = get_user_model()
 
 
-class Approach(ChoicesEnumMixin, Enum):
-    PEDESTRIAN = "Pedestrian"
-    WHEEL = "Wheel"
-    CAR = "Car"
-    BUS = "Bus"
-    LIFT = "Lift"
-    CAMPER = "Camper"
+# class ApproachTypes(ChoicesEnumMixin, Enum):
+#     PEDESTRIAN = "Pedestrian"
+#     WHEEL = "Wheel"
+#     CAR = "Car"
+#     BUS = "Bus"
+#     LIFT = "Lift"
+#     CAMPER = "Camper"
 
 
-class WeatherCondition(ChoicesEnumMixin, Enum):
-    SUNNY = "Sunny"
-    CLOUDY = "Cloudy"
-    RAINY = "Rainy"
-    SNOWY = "Snowy"
+# class WeatherCondition(ChoicesEnumMixin, Enum):
+#     SUNNY = "Sunny"
+#     CLOUDY = "Cloudy"
+#     RAINY = "Rainy"
+#     SNOWY = "Snowy"
 
 
-class Month(ChoicesEnumMixin, Enum):
-    JANUARY = "Jan"
-    FEBRUARY = "Feb"
-    MARCH = "Mar"
-    APRIL = "Apr"
-    MAY = "May"
-    JUNE = "Jun"
-    JULY = "Jul"
-    AUGUST = "Aug"
-    SEPTEMBER = "Sep"
-    OCTOBER = "Oct"
-    NOVEMBER = "Nov"
-    DECEMBER = "Dec"
+# class Month(ChoicesEnumMixin, Enum):
+#     JANUARY = "Jan"
+#     FEBRUARY = "Feb"
+#     MARCH = "Mar"
+#     APRIL = "Apr"
+#     MAY = "May"
+#     JUNE = "Jun"
+#     JULY = "Jul"
+#     AUGUST = "Aug"
+#     SEPTEMBER = "Sep"
+#     OCTOBER = "Oct"
+#     NOVEMBER = "Nov"
+#     DECEMBER = "Dec"
 
 
-class Services(ChoicesEnumMixin, Enum):
-    KITCHEN = "Kitchen"
-    CENTRAL_HEATING = "Central Heating"
-    FIREPLACE = "Fireplace"
-    WIFI = "WiFi"
-    TV = "TV"
-    ROOM_WITH_BATHROOM = "Room with Bathroom"
-    SHARED_BATHROOM = "Shared Bathroom"
-    ROOM_WITH_TOILET = "Room with Toilet"
-    SHARED_TOILET = "Shared Toilet"
-    SAUNA = "Sauna"
-    BBQ_AREA = "BBQ Area"
-    PLAYGROUND = "Playground"
-    LAUNDRY_FACILITIES = "Laundry Facilities"
-    BALCONY = "Balcony"
+# class Services(ChoicesEnumMixin, Enum):
+#     KITCHEN = "Kitchen"
+#     CENTRAL_HEATING = "Central Heating"
+#     FIREPLACE = "Fireplace"
+#     WIFI = "WiFi"
+#     TV = "TV"
+#     ROOM_WITH_BATHROOM = "Room with Bathroom"
+#     SHARED_BATHROOM = "Shared Bathroom"
+#     ROOM_WITH_TOILET = "Room with Toilet"
+#     SHARED_TOILET = "Shared Toilet"
+#     SAUNA = "Sauna"
+#     BBQ_AREA = "BBQ Area"
+#     PLAYGROUND = "Playground"
+#     LAUNDRY_FACILITIES = "Laundry Facilities"
+#     BALCONY = "Balcony"
+
+
+class Approach(models.Model):
+    name = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name_plural = "Approach"
+
+    def __str__(self):
+        return self.name
+    
+class Month(models.Model):
+    name = models.CharField(max_length=30)
+
+    class Meta:
+        verbose_name_plural = "Month"
+    
+    def __str__(self):
+        return self.name
+
+class Services(models.Model):
+    name = models.CharField(max_length=30)
+
+    class Meta:
+        verbose_name_plural = "Services"
+
+    def __str__(self):
+        return self.name
+    
+class WeatherCondition(models.Model):
+    name = models.CharField(max_length=30)
+
+    class Meta:
+        verbose_name_plural = "Weather Condition"
+
+    def __str__(self):
+        return self.name
 
 
 class Huts(models.Model):
@@ -112,33 +151,13 @@ class Huts(models.Model):
         null=True,
     )
 
-    approach = MultiSelectField(
-        choices=Approach.choices(),
-        max_length=Approach.max_length(),
-        blank=True,
-        null=True,
-    )
+    approach = models.ManyToManyField(Approach)
 
-    weather_forecast = MultiSelectField(
-        choices=WeatherCondition.choices(),
-        max_length=WeatherCondition.max_length(),
-        blank=True,
-        null=True,
-    )
+    weather_condition = models.ManyToManyField(WeatherCondition)
 
-    opened_in = MultiSelectField(
-        choices=Month.choices(),
-        max_length=Month.max_length(),
-        blank=True,
-        null=True,
-    )
+    opened_in = models.ManyToManyField(Month)
 
-    services = MultiSelectField(
-        choices=Services.choices(),
-        max_length=Services.max_length(),
-        blank=True,
-        null=True,
-    )
+    services = models.ManyToManyField(Services)
 
     slug = models.SlugField(
         unique=True,
@@ -190,6 +209,20 @@ class Huts(models.Model):
 
     class Meta:
         verbose_name_plural = "Huts"  # Specify the plural name explicitly
+
+    def __str__(self):
+        return self.hut_name
+    
+    def get_absolute_url(self):
+        return reverse('hut-details', args=[self.category.slug, self.slug])
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if not self.slug:
+            self.slug = slugify(f'{self.pk}-{self.hut_name}')
+
+        return super().save(*args, **kwargs)
 
 
 class HutsLike(models.Model):
