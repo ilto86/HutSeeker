@@ -27,13 +27,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
-    'rest_framework',
 
     # My Apps
     'HutSeeker.accounts',
     'HutSeeker.huts',
     'multiselectfield',
+    'corsheaders',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
