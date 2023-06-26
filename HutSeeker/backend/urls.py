@@ -3,7 +3,7 @@ from django.conf import settings
 from django.urls import include, path
 from django.conf.urls.static import static
 from rest_framework import routers
-from .huts import views
+from backend.huts import views
 
 router = routers.DefaultRouter()
 router.register(r'huts', views.HutsView, 'huts')

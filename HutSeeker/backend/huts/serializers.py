@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Huts, Approach
+from backend.huts.models import Huts, Approach
 
 class HutsSerializer(serializers.ModelSerializer):
     class Meta:
