@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .huts.models import Approach, Huts, HutsLike, HutsComment, Month, Services, WeatherCondition
+from backend.huts.models import Approach, Huts, HutsLike, HutsComment, Month, Services, WeatherCondition
 
 
 @admin.register(Huts)

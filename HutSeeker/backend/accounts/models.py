@@ -4,8 +4,8 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import MinLengthValidator
 
-from HutSeeker.accounts.manager import AppUserManager
-from HutSeeker.utils.validators import validate_alphabet_characters
+from backend.accounts.manager import AppUserManager
+from backend.utils.validators import validate_alphabet_characters
 
 
 class AppUser(AbstractBaseUser, PermissionsMixin):

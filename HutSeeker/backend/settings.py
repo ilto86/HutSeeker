@@ -46,7 +46,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
 
-ROOT_URLCONF = 'HutSeeker.urls'
+ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
     {
