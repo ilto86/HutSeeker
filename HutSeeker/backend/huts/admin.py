@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
 from backend.huts.models import Approach, Huts, HutsLike, HutsComment, Month, Services, WeatherCondition
@@ -16,6 +17,10 @@ class HutsAdmin(admin.ModelAdmin):
         'hut_area',
         'altitude',
         'accommodation_beds',
+        'display_approach',
+        'display_weather_condition',
+        'display_opened_in',
+        'display_services',
         'description',
         'website',
         'image',
@@ -24,6 +29,22 @@ class HutsAdmin(admin.ModelAdmin):
         'publication_date_and_time',
         'user',
     )
+
+    def display_approach(self, obj):
+        return ', '.join([str(approach) for approach in obj.approach.all()])
+    display_approach.short_description = 'Approach'
+
+    def display_weather_condition(self, obj):
+        return ', '.join([str(condition) for condition in obj.weather_condition.all()])
+    display_weather_condition.short_description = 'Weather Condition'
+
+    def display_opened_in(self, obj):
+        return ', '.join([str(month) for month in obj.opened_in.all()])
+    display_opened_in.short_description = 'Opened In'
+
+    def display_services(self, obj):
+        return ', '.join([str(service) for service in obj.services.all()])
+    display_services.short_description = 'Services'
 
     search_fields = (
         'hut_name',
@@ -47,24 +68,20 @@ class HutsAdmin(admin.ModelAdmin):
     )
 
     fieldsets = (
-        ('Huts info', {
-            'fields': (
-                'hut_name',
-                'hut_owner',
-                'hut_care_taker',
-                'phone_contact',
-                'hut_area',
-                'altitude',
-                'accommodation_beds',
-                'opened_in',
-                'services',
-                'description',
-                'website',
-                'image',
-                'longitude',
-                'latitude',
-                'user',
-            )
+        ('Contact Information', {
+            'fields': ('hut_name', 'hut_owner', 'hut_care_taker', 'phone_contact')
+        }),
+        ('Location Information', {
+            'fields': ('hut_area', 'altitude', 'longitude', 'latitude')
+        }),
+        ('Accommodation Information', {
+            'fields': ('accommodation_beds',)
+        }),
+        ('Many-to-Many Fields', {
+            'fields': ('approach', 'weather_condition', 'opened_in', 'services')
+        }),
+        ('Additional Information', {
+            'fields': ('description', 'website', 'image', 'publication_date_and_time', 'user')
         }),
     )
 
