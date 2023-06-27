@@ -29,18 +29,18 @@ UserModel = get_user_model()
 
 
 # class Month(ChoicesEnumMixin, Enum):
-#     JANUARY = "Jan"
-#     FEBRUARY = "Feb"
-#     MARCH = "Mar"
-#     APRIL = "Apr"
+#     JANUARY = "January"
+#     FEBRUARY = "February"
+#     MARCH = "March"
+#     APRIL = "April"
 #     MAY = "May"
-#     JUNE = "Jun"
-#     JULY = "Jul"
-#     AUGUST = "Aug"
-#     SEPTEMBER = "Sep"
-#     OCTOBER = "Oct"
-#     NOVEMBER = "Nov"
-#     DECEMBER = "Dec"
+#     JUNE = "June"
+#     JULY = "July"
+#     AUGUST = "August"
+#     SEPTEMBER = "September"
+#     OCTOBER = "October"
+#     NOVEMBER = "November"
+#     DECEMBER = "December"
 
 
 # class Services(ChoicesEnumMixin, Enum):
@@ -105,7 +105,7 @@ class Huts(models.Model):
     MAX_ALTITUDE_LENGTH = 5
     MAX_LODGING_DIGITS_LENGTH = 9
     MAX_LODGING_DIGITS_PLACES_LENGTH = 4
-    MAX_DESCRIPTION_LENGTH = 150
+    MAX_DESCRIPTION_LENGTH = 1000
     MAX_DIGITS_LENGTH = 9
     MAX_DECIMAL_PLACES_LENGTH = 6
 
