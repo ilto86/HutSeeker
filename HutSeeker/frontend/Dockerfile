@@ -1,4 +1,4 @@
-FROM node:lts-slim
+FROM node:latest
 
 WORKDIR /frontend
 
