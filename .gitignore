@@ -203,3 +203,7 @@ build
 
 # Dockerignore
 .dockerignore
+
+# Json files
+/package.json
+/package-lock.json

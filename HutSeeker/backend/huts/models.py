@@ -65,7 +65,8 @@ class Approach(models.Model):
 
     def __str__(self):
         return self.name
-    
+
+
 class Month(models.Model):
     name = models.CharField(max_length=30)
 
@@ -75,6 +76,7 @@ class Month(models.Model):
     def __str__(self):
         return self.name
 
+
 class Services(models.Model):
     name = models.CharField(max_length=30)
 
@@ -83,7 +85,8 @@ class Services(models.Model):
 
     def __str__(self):
         return self.name
-    
+
+
 class WeatherCondition(models.Model):
     name = models.CharField(max_length=30)
 
@@ -205,20 +208,14 @@ class Huts(models.Model):
         on_delete=models.CASCADE,
     )
 
-    def save(self, *args, **kwargs):
-        # Generate the slug from the hut_name field
-        self.slug = slugify(self.hut_name)
-
-        super().save(*args, **kwargs)
-
     class Meta:
         verbose_name_plural = "Huts"  # Specify the plural name explicitly
 
     def __str__(self):
         return self.hut_name
-    
+
     def get_absolute_url(self):
-        return reverse('hut-details', args=[self.category.slug, self.slug])
+        return reverse('hut-details', args=[self.pk, slugify(self.hut_name)])
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
